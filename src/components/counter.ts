@@ -8,9 +8,8 @@ interface CounterState {
 }
 
 class Counter extends Component<CounterProps, CounterState> {
-  constructor(props: CounterProps) {
-    super(props);
-    this.state = { count: props.initial };
+  getInitialState(props: CounterProps): CounterState {
+    return { count: props.initial };
   }
   render(): HTMLElement {
     const btn = document.createElement("button");
@@ -31,5 +30,5 @@ class Counter extends Component<CounterProps, CounterState> {
 
 
 const app = document.getElementById("app")!;
-const counter = new Counter({ initial: 1 });
+const counter = new Counter({ initial: 0 });
 const unmount = mount(counter, app);

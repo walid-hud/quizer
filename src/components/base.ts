@@ -7,7 +7,8 @@ abstract class Component<P extends Props = {} , S extends State = {}> {
     root:HTMLElement;
     constructor(props:P){
         this.props = Object.freeze(props)
-        this.state = Object.freeze({} as S)
+        const initialState = this.getInitialState(props)
+        this.state = Object.freeze(initialState as S)
         this.root = this.render()
     }
 
@@ -15,7 +16,12 @@ abstract class Component<P extends Props = {} , S extends State = {}> {
     on_init():void{}
     on_mount():void{}
     on_unmount():void{}
-    on_update(prev_state:S):void{}  
+    on_update(_prev_state:S):void{}  
+
+    // Override this method to provide initial state
+    getInitialState(_props: P): Partial<S> {
+        return {} as Partial<S>
+    }
 
     abstract render():HTMLElement
     set_state(partial:Partial<S>){
